@@ -164,7 +164,8 @@ We acknowledge the following open source projects.
 @article{yuan2023hap,
   title={HAP: Structure-Aware Masked Image Modeling for Human-Centric Perception},
   author={Yuan, Junkun and Zhang, Xinyu and Zhou, Hao and Wang, Jian and Qiu, Zhongwei and Shao, Zhiyin and Zhang, Shaofeng and Long, Sifan and Kuang, Kun and Yao, Kun and others},
-  journal={arXiv preprint arXiv:2310.20695},
+  journal={Advances in Neural Information Processing Systems},
+  volume={36},
   year={2023}
 }
 ```
