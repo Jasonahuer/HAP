@@ -19,7 +19,7 @@
             "console": "integratedTerminal",
             "args": [
                 "--cfg",
-                "./configs/pedes_baseline/Mars.yaml",
+                "configs/pedes_baseline/EventPAR.yaml",
             ],
             "env": {
                 "CUDA_VISIBLE_DEVICES": "0"

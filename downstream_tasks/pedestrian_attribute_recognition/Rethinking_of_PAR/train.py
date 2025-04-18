@@ -446,7 +446,7 @@ def argument_parser():
 
     parser.add_argument(
         "--cfg", help="decide which cfg to use", type=str,
-        default="/data/jinjiandong/HAP-master/downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/configs/pedes_baseline/EventPAR.yaml",
+        default="/HAP-master/downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/configs/pedes_baseline/EventPAR.yaml",
 
     )
 
