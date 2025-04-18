@@ -8,6 +8,21 @@
             "name": "test",
             "type": "python",
             "request": "launch",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0",
+                "CKPT":"/root/HAP/downstream_tasks/pedestrian_attribute_recognition/ckpt_default_pretrain_pose_mae_vit_base_patch16_LUPersonPose_399.pth",
+            },
+            "program": "train.py",
+            "args": [
+                "--cfg",
+                "configs/pedes_baseline/pa100k.yaml",
+            ],
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "torch_test",
+            "type": "python",
+            "request": "launch",
             "module": "torch.distributed.launch",
             "env": {
                 "CUDA_VISIBLE_DEVICES": "0",
@@ -23,8 +38,6 @@
                 "configs/pedes_baseline/pa100k.yaml",
             ],
             "console": "integratedTerminal"
-
-
         },
 
         {
