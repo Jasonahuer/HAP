@@ -22,3 +22,4 @@ downstream_tasks\pedestrian_attribute_recognition\Rethinking_of_PAR\data\PETA\da
 *.out
 
 /root/HAP/downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/data/PA100k
+downstream_tasks/pedestrian_attribute_recognition/ckpt_default_pretrain_pose_mae_vit_base_patch16_LUPersonPose_399.pth
