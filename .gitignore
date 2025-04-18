@@ -4,3 +4,5 @@ downstream_tasks/pedestrian_attribute_recognition/ckpt_default_pretrain_pose_mae
 *.out
 *.pkl
 downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/ckpt_max.pth
+downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/output-attribute/PA100k/default/
+
