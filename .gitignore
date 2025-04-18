@@ -21,5 +21,4 @@ downstream_tasks\pedestrian_attribute_recognition\Rethinking_of_PAR\data\PETA\da
 downstream_tasks\pedestrian_attribute_recognition\Rethinking_of_PAR\data\PETA\dataset_zs_run0.pkl
 *.out
 
-
-downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/data/PA100k/data/*.jpg
+/root/HAP/downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/data/PA100k

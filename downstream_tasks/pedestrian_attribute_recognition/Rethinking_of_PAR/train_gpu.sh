@@ -15,7 +15,7 @@
 
 # CUDA_VISIBLE_DEVICES=0 python train.py --cfg ./configs/pedes_baseline/pa100k.yaml
 
-CUDA_VISIBLE_DEVICES=5 python train.py --cfg ./configs/pedes_baseline/Mars.yaml
+CUDA_VISIBLE_DEVICES=0 python train.py --cfg ./configs/pedes_baseline/Mars.yaml
 
 # for swin transformer, change cfg.TRAIN.BATCH_SIZE: 32
 #CUDA_VISIBLE_DEVICES=0,1 python -m torch.distributed.launch --nproc_per_node=2 --master_port=1233 train.py --cfg ./configs/pedes_baseline/pa100k.yaml
