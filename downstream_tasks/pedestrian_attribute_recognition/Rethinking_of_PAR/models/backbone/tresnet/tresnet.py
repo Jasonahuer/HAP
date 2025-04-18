@@ -5,7 +5,7 @@ from collections import OrderedDict
 # from src.models.tresnet.layers.anti_aliasing import AntiAliasDownsampleLayer
 # from .layers.avg_pool import FastAvgPool2d
 # from .layers.general_layers import SEModule, SpaceToDepthModule
-from inplace_abn import InPlaceABN
+from inplace_abns.abn import InPlaceABN
 
 from models.backbone.tresnet.layers.anti_aliasing import AntiAliasDownsampleLayer
 from models.backbone.tresnet.layers.avg_pool import FastAvgPool2d

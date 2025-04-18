@@ -2,7 +2,7 @@ import numpy as np
 
 
 def tb_visualizer_pedes(tb_writer, lr, epoch, train_loss, valid_loss, train_result, valid_result,
-                        train_gt, valid_gt, train_loss_mtr, valid_loss_mtr, model, attr_name):
+                        train_gt, valid_gt, train_loss_mtr, valid_loss_mtr, model):
     tb_writer.add_scalars('train/lr', {'lr': lr}, epoch)
     tb_writer.add_scalars('train/losses', {'train': train_loss,
                                          'test': valid_loss}, epoch)

@@ -28,7 +28,13 @@ import torch
 import torch.nn as nn
 
 from timm.data import IMAGENET_DEFAULT_MEAN, IMAGENET_DEFAULT_STD
-from torch._six import container_abcs
+try:
+    import collections.abc as container_abcs
+except ImportError:
+    from torch._six import container_abcs
+
+
+#from torch._six import container_abcs
 import torch.nn.functional as F
 import torch.utils.checkpoint as checkpoint
 
@@ -358,7 +364,7 @@ def vit_base_patch16_224(nattr=1, pretrained=True, **kwargs):
     if pretrained:
         load_pretrained(
             model,
-            pretrain='../ckpt_default_pretrain_pose_mae_vit_base_patch16_LUPersonPose_399.pth',)
+            pretrain='/data/jinjiandong/HAP-master/ckpt_default_pretrain_pose_mae_vit_base_patch16_LUPersonPose_399.pth',)
     return model
 
 
@@ -443,6 +449,7 @@ def interpolate_pos_embed(model, checkpoint_model, orig_size, param_name):
             checkpoint_model[param_name] = new_pos_embed
 
 def load_pretrained(model, pretrain, strict=False):
+    pretrain="/media/amax/c08a625b-023d-436f-b33e-9652dc1bc7c01/DATA/wanghaiyang/baseline/HAP-master/ckpt_default_pretrain_pose_mae_vit_base_patch16_LUPersonPose_399.pth"
     state_dict = torch.load(pretrain, map_location='cpu')
 
     # del state_dict["head.weight"]

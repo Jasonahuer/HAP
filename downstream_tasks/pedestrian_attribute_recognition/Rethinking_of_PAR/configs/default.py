@@ -22,11 +22,11 @@ _C.DISTRIBUTTED = False
 # ----- DATASET BUILDER -----
 _C.DATASET = CN()
 _C.DATASET.TYPE = "pedes"
-_C.DATASET.NAME = "PA100k"
+_C.DATASET.NAME = "EventPAR"
 _C.DATASET.TARGETTRANSFORM = []
 _C.DATASET.ZERO_SHOT = False
 _C.DATASET.LABEL = 'eval'  # train on all labels, test on part labels (35 for peta, 51 for rap)
-_C.DATASET.TRAIN_SPLIT = 'trainval'
+_C.DATASET.TRAIN_SPLIT = 'train'
 _C.DATASET.VAL_SPLIT = 'val'
 _C.DATASET.TEST_SPLIT = 'test'
 _C.DATASET.HEIGHT = 256

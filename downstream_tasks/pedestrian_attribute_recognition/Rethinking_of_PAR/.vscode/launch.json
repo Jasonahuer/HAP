@@ -1,0 +1,31 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+       
+        {
+            "name": "train_debug",
+            "type": "python",
+            "request": "launch",
+            "program": "/media/amax/c08a625b-023d-436f-b33e-9652dc1bc7c01/DATA/wanghaiyang/baseline/HAP-master/downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/train.py",
+            "console": "integratedTerminal", 
+            "args": [
+                
+                "--cfg" ,"./configs/pedes_baseline/Mars.yaml",
+                
+
+
+            ],
+           
+
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "5"
+            },
+            "justMyCode": true
+        }
+    ]
+}
+
+           

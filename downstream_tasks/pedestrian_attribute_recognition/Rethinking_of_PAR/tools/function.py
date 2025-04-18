@@ -95,11 +95,11 @@ class LogVisual:
 
 
 def get_pkl_rootpath(dataset, zero_shot):
-    root = os.path.join("./data", f"{dataset}")
+    root = os.path.join("/data/jinjiandong/dataset/MSP_degrade", f"{dataset}")
     if zero_shot:
         data_path = os.path.join(root, 'dataset_zs_run0.pkl')
     else:
-        data_path = os.path.join(root, 'dataset_all.pkl')  #
+        data_path = os.path.join(root, 'dataset_random.pkl')  #
 
     return data_path
 

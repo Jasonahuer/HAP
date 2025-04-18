@@ -7,7 +7,6 @@ from collections import defaultdict
 from datetime import datetime
 
 import numpy as np
-from mmcv.cnn import get_model_complexity_info
 from torch.utils.tensorboard import SummaryWriter
 from visdom import Visdom
 
@@ -65,9 +64,9 @@ def main(cfg, args):
         writer_dir = os.path.join(exp_dir, cfg.NAME, 'runs', current_time)
         writer = SummaryWriter(log_dir=writer_dir)
 
-    if cfg.REDIRECTOR:
-        print('redirector stdout')
-        ReDirectSTD(stdout_file, 'stdout', False)
+    # if cfg.REDIRECTOR:
+    #     print('redirector stdout')
+    #     ReDirectSTD(stdout_file, 'stdout', False)
 
     """
     the reason for args usage is CfgNode is immutable
@@ -156,12 +155,15 @@ def main(cfg, args):
     if args.local_rank == 0:
         print(f"backbone: {cfg.BACKBONE.TYPE}, classifier: {cfg.CLASSIFIER.NAME}")
         print(f"model_name: {cfg.NAME}")
-
+    # 打印模型参数量
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f'Total number of parameters: {total_params}')
     # flops, params = get_model_complexity_info(model, (3, 256, 128), print_per_layer_stat=True)
     # print('{:<30}  {:<8}'.format('Computational complexity: ', flops))
     # print('{:<30}  {:<8}'.format('Number of parameters: ', params))
-
+    #breakpoint()
     model = model.cuda()
+    
     if args.distributed:
         model = torch.nn.SyncBatchNorm.convert_sync_batchnorm(model)
         model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[args.local_rank])
@@ -191,6 +193,14 @@ def main(cfg, args):
                         {'params': model.module.fresh_params(),
                          'lr': cfg.TRAIN.LR_SCHEDULER.LR_NEW,
                          'weight_decay': cfg.TRAIN.OPTIMIZER.WEIGHT_DECAY}]
+        # param_groups = [{'params': model.finetune_params(),
+        #                  'lr': cfg.TRAIN.LR_SCHEDULER.LR_FT,
+        #                  'weight_decay': cfg.TRAIN.OPTIMIZER.WEIGHT_DECAY},
+        #                 {'params': model.fresh_params(),
+        #                  'lr': cfg.TRAIN.LR_SCHEDULER.LR_NEW,
+        #                  'weight_decay': cfg.TRAIN.OPTIMIZER.WEIGHT_DECAY}]
+        
+        
     else:
         # bn parameters are not applied with weight decay
         ft_params = seperate_weight_decay(
@@ -355,13 +365,13 @@ def trainer(cfg, args, epoch, model, model_ema, train_loader, valid_loader, crit
 
             if args.local_rank == 0:
                 tb_visualizer_pedes(tb_writer, lr, e, train_loss, valid_loss, train_result, valid_result,
-                                    train_gt, valid_gt, train_loss_mtr, valid_loss_mtr, model, train_loader.dataset.attr_id)
+                                    train_gt, valid_gt, train_loss_mtr, valid_loss_mtr, model)
 
             cur_metric = valid_result.ma
             if cur_metric > maximum:
                 maximum = cur_metric
                 best_epoch = e
-                save_ckpt(model, path, e, maximum)
+            save_ckpt(model, path, e, maximum)
 
             result_list[e] = {
                 'train_result': train_result,  # 'train_map': train_map,
@@ -414,7 +424,7 @@ def trainer(cfg, args, epoch, model, model_ema, train_loader, valid_loader, crit
             if cur_metric > maximum:
                 maximum = cur_metric
                 best_epoch = e
-                save_ckpt(model, path, e, maximum)
+                #save_ckpt(model, path, e, maximum)
 
             result_list[e] = {
                 'train_result': train_metric, 'valid_result': valid_metric,
@@ -424,8 +434,8 @@ def trainer(cfg, args, epoch, model, model_ema, train_loader, valid_loader, crit
         else:
             assert False, f'{cfg.METRIC.TYPE} is unavailable'
 
-        with open(result_path, 'wb') as f:
-            pickle.dump(result_list, f)
+        # with open(result_path, 'wb') as f:
+        #     pickle.dump(result_list, f)
 
     return maximum, best_epoch
 
@@ -436,7 +446,7 @@ def argument_parser():
 
     parser.add_argument(
         "--cfg", help="decide which cfg to use", type=str,
-        default="./configs/pedes_baseline/pa100k.yaml",
+        default="/data/jinjiandong/HAP-master/downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/configs/pedes_baseline/EventPAR.yaml",
 
     )
 

@@ -36,12 +36,23 @@ def batch_trainer(cfg, args, epoch, model, model_ema, train_loader, criterion, o
 
     lr = optimizer.param_groups[1]['lr']
 
-    for step, (imgs, gt_label, imgname) in enumerate(train_loader):
-        iter_num = epoch * len(train_loader) + step
+    for step, (image_rgb,image_event, gt_label, imgname) in enumerate(train_loader):
 
+        # if step==4:
+        #     break
+        iter_num = epoch * len(train_loader) + step
+        image_rgb=image_rgb.cuda()
+        image_event=image_event.cuda()
         batch_time = time.time()
-        imgs, gt_label = imgs.cuda(), gt_label.cuda()
-        train_logits, feat = model(imgs, gt_label)
+       
+        gt_label = gt_label.cuda()
+
+        # import thop
+        # flops, params = thop.profile(model, inputs=(imgs[:2],))  
+        # print(f"FLOPs: {flops / 1e9} G")  # 打印计算量（以十亿次浮点运算为单位）  
+        # print(f"Params: {params / 1e6} M")  # 打印参数量（以百万为单位）
+
+        train_logits, feat = model(image_rgb,image_event, gt_label)
 
 
         loss_list, loss_mtr = criterion(train_logits, gt_label)
@@ -88,7 +99,7 @@ def batch_trainer(cfg, args, epoch, model, model_ema, train_loader, criterion, o
 
         imgname_list.append(imgname)
 
-        log_interval = 100
+        log_interval = 50
 
         if (step + 1) % log_interval == 0 or (step + 1) % len(train_loader) == 0:
             if args.local_rank == 0:
@@ -125,12 +136,15 @@ def valid_trainer(cfg, args, epoch, model, valid_loader, criterion, loss_w=[1, ]
     loss_mtr_list = []
 
     with torch.no_grad():
-        for step, (imgs, gt_label, imgname) in enumerate(tqdm(valid_loader)):
-            imgs = imgs.cuda()
+        for step, (image_rgb,image_event, gt_label, imgname) in enumerate(tqdm(valid_loader)):
+            # if step==4:
+            #     break
+            image_rgb=image_rgb.cuda()
+            image_event=image_event.cuda()
             gt_label = gt_label.cuda()
             gt_list.append(gt_label.cpu().numpy())
             gt_label[gt_label == -1] = 0
-            valid_logits, feat = model(imgs, gt_label)
+            valid_logits, feat = model(image_rgb,image_event, gt_label)
 
 
             loss_list, loss_mtr = criterion(valid_logits, gt_label)

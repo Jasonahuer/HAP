@@ -109,8 +109,21 @@ class FeatClassifier(nn.Module):
         else:
             return self.backbone.named_parameters()
 
-    def forward(self, x, label=None):
-        feat_map = self.backbone(x)
+    def forward(self, image_rgb,image_event, label=None):
+        
+        batch_size, num_frames, channels, height, width = image_rgb.size()
+        image_rgb=image_rgb.view(-1, channels, height, width)#(DF, C, H, W)
+        image_event= image_event.view(-1, channels, height, width)#(DF, C, H, W)
+        
+        rgb_feat_map = self.backbone(image_rgb)
+        event_feat_map = self.backbone(image_event)
+        DF,N,D = rgb_feat_map.shape
+        rgb_features=rgb_feat_map.view(batch_size, num_frames,N,D ).mean(dim=1)
+        event_features=event_feat_map.view(batch_size, num_frames,N,D ).mean(dim=1)
+
+       
+        feat_map=rgb_features+event_features
+
         logits, feat = self.classifier(feat_map, label)
         return logits, feat
 
