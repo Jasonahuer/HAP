@@ -1,0 +1,6 @@
+downstream_tasks/pedestrian_attribute_recognition/ckpt_default_pretrain_pose_mae_vit_base_patch16_LUPersonPose_399.pth
+*.pyc
+
+*.out
+*.pkl
+downstream_tasks/pedestrian_attribute_recognition/Rethinking_of_PAR/ckpt_max.pth
