@@ -7,7 +7,7 @@ from collections import defaultdict
 from datetime import datetime
 
 import numpy as np
-from mmcv.cnn import get_model_complexity_info
+# from mmcv.cnn import get_model_complexity_info
 from torch.utils.tensorboard import SummaryWriter
 from visdom import Visdom
 

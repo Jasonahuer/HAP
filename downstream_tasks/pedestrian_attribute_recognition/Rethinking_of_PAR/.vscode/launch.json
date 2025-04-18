@@ -1,0 +1,55 @@
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "test",
+            "type": "python",
+            "request": "launch",
+            "module": "torch.distributed.launch",
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0",
+                "CKPT":"/root/HAP/downstream_tasks/pedestrian_attribute_recognition/ckpt_default_pretrain_pose_mae_vit_base_patch16_LUPersonPose_399.pth",
+                "DATA":"pa100k",
+            },
+            // "program": "train.py",
+            "args": [
+                "--nproc_per_node=1",
+                "--master_port=6666",
+                "train.py",
+                "--cfg",
+                "configs/pedes_baseline/pa100k.yaml",
+            ],
+            "console": "integratedTerminal"
+
+
+        },
+
+        {
+            "name": "Python 调试程序: 当前文件",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "train_debug",
+            "type": "python",
+            "request": "launch",
+            "program": "train.py",
+            "console": "integratedTerminal",
+            "args": [
+                "--cfg",
+                "./configs/pedes_baseline/Mars.yaml",
+            ],
+            "env": {
+                "CUDA_VISIBLE_DEVICES": "0"
+            },
+            "justMyCode": true
+        },
+
+        }
+    ]
+}
